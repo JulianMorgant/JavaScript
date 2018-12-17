@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Exo JS</title>
+</head>
+
+<body>
+
+    <h1 style="color:rgb(185, 58, 164)" id=indexId>Java deuxieme jour...</h1>
+    <p>Exo DOM</p>
+    <textarea id="txtArea">default</textarea>
+    <button id="bt1">Clik Me Pleaaaaaaaase</button>
+    <BR>
+    <button id="btChgColor">Changer la couleur</button>
+    <BR>
+    <ul id='myUl'>
+        <li>Pomme</li>
+        <li>Poire</li>
+        <li>Abricot</li>
+    </ul>
+    <BR>
+
+</body>
+
+
+<!-- IMPORTS -->
+<!-- <script src="js-data/livres.js"> </script>  -->
+
+<!-- SCRIPT -->
+<script>
+
+
+    var body = document.body;
+    var btColor = document.getElementById("btChgColor");
+    var bt1 = document.getElementById("bt1");
+    var txtArea = document.getElementById("txtArea");
+    var myUl = document.getElementById("myUl");
+
+
+    console.log(txtArea.value);
+    bt1.onclick = () => myUl.innerHTML += `<li>${txtArea.value}</li>`;
+    btColor.addEventListener("click",()=>{body.setAttribute("style","background-color:red");});
+
+</script>
+
+</html>

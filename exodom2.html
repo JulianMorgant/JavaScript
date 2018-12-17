@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Exo JS</title>
+
+    <style>
+        .hidden {
+            display: none;
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <h1 style="color:rgb(185, 58, 164)" id=indexId>JavaScript troisième jour...</h1>
+    <p>Exo DOM 2</p>
+    <p>base de menu arborescent | cliques sur le titre pour display/undisplay le texte qui suit</p>
+    <BR>
+    <h2>Cliques sur moi</h2>
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur ab dolorem voluptate ipsam debitis placeat
+        hic quo cum accusantium laboriosam.</p>
+    <h2 style='color: blueviolet'>Suite du texte</h2>
+    <p style='color: blueviolet'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur ab dolorem
+        voluptate ipsam debitis placeat
+        hic quo cum accusantium laboriosam.</p>
+
+</body>
+
+<!-- IMPORTS -->
+<!-- <script src="js-data/livres.js"> </script>  -->
+
+<!-- SCRIPT -->
+<script>
+
+    //---FONCTIONS---
+
+
+    //---DECLARATIONS---
+    var allMenu = document.querySelectorAll('a');
+    var title = document.querySelector('h2');
+    var paragraph = document.querySelector('h2~p'); // selection du frère de h2
+
+    //---WORK---
+    // creation d'un listener (écouteur d'evènement...)
+    title.addEventListener("click", () => { paragraph.classList.toggle("hidden") });
+
+</script>
+
+</html>

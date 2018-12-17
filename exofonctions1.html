@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Exo JS</title>
+</head>
+
+<body>
+
+    <h1 style="color:rgb(185, 58, 164)" id=indexId>Java deuxieme jour...</h1>
+    <p>Exo Tableaux 5 | TaleauxAssociatifs, Maps ...</p>
+    <p>Retrouver des livres dans livres.js</p>
+    <span id=SpanResult style="color:rgb(47, 157, 165)"></span>
+</body>
+
+
+<!-- IMPORTS -->
+<script src="js-data/livres.js"> </script>
+
+<!-- SCRIPT -->
+<script>
+
+    // FONCTIONS
+    function existInTable(tableToRead, elementToFind) {
+        returnBoolean = false;
+        elementToFind = elementToFind.toUpperCase();
+        for (let element of tableToRead) {
+            if (element.toUpperCase() == elementToFind) { returnBoolean = true; break }
+        }
+        return returnBoolean;
+    }
+
+    function sleep(milliseconds) {
+        var start = new Date().getTime();
+        for (var i = 0; i < 1e7; i++) {
+            3
+            if ((new Date().getTime() - start) > milliseconds) {
+                break;
+            }
+        }
+    }
+
+    function randomInt(min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    function circleCircumference(diameter) {
+        if (isANumber(diameter)) {
+            return 2 * Math.PI * (diameter / 2);
+        } else {
+            return false;
+        }
+    }
+
+    function isANumber(arg) {
+        return !isNaN(arg - 0)
+    }
+
+    // VARIABLES
+
+
+    // WORK
+    console.log(isANumber("rr"));
+    console.log(isANumber("25"));
+    console.log(isANumber(25));
+    console.log(isANumber());
+
+
+
+
+    // OUT
+
+
+    document.getElementById('SpanResult').innerHTML = `Résultats : <BR>
+  Tableau : ${books} <BR>
+  *********************<BR>`
+    console.table(books);
+
+
+
+</script>
+
+</html>

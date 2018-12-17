@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Exo JS</title>
+</head>
+
+<body>
+
+    <h1 style="color:rgb(185, 58, 164)" id=indexId>Java deuxieme jour...</h1>
+    <p>Exo Tableaux 2 | Position et valeur du max, somme, moyenne...</p>
+    <span id=SpanResult style="color:rgb(47, 157, 165)"></span>
+</body>
+
+<script>
+    var fruits = [7, 11, 14,1, 48, 3];
+    console.log(fruits);
+    console.log("************************");
+    
+    //DECLARATIONS
+    var varMax = fruits[0];
+    var varMin = fruits[0];
+    var varSum = 0;
+    var varAvg = 0;
+
+    //WORK
+    for (let index in fruits) {
+        let tempFruit = fruits[index];
+        varSum += tempFruit;
+        if(varMax < tempFruit) {varMax = tempFruit};
+        if(varMin > tempFruit) {varMin = tempFruit};
+    }
+
+    //PRINT
+    document.getElementById('SpanResult').innerHTML = `Résultats : <BR>
+        Tableau : ${fruits} <BR>
+        *********************<BR>
+        Max : ${varMax} à la position ${fruits.indexOf(varMax) + 1} <BR>
+        Min : ${varMin} à la position ${fruits.indexOf(varMin) + 1} <BR>
+        Sum : ${varSum} <BR>
+        Avg : ${varSum/fruits.length}`;
+</script>
+
+</html>

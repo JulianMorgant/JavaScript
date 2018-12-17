@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Exo JS</title>
+
+    <style>
+        /* pour cacher */
+        .hidden {
+            display: none;
+        }
+
+        /*
+         pour changer de pointeur sur les balises 'a' ... plus class 
+        #menu a {
+            cursor:pointer;
+        }
+        */
+        .stars {
+            cursor:pointer;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .starsForm {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 12px;
+            border-radius: 3px;
+            border-width: thin;
+            border: 1px solid rgb(46, 46, 46);
+            background-color: rgb(255, 255, 255);
+            padding: 2px;
+            width: auto;
+            max-width: 40%;
+            max-height: 70%;
+            margin: 2px auto;
+            position:absolute;
+            z-index: 20;
+
+         }
+
+         
+        .popup {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 12px;
+            border-radius: 3px;
+            border-width: thin;
+            border: 1px solid rgb(46, 46, 46);
+            background-color: rgb(255, 255, 255);
+            padding: 2px;
+            width: auto;
+            max-width: 40%;
+            max-height: 70%;
+            margin: 2px auto;
+            position:absolute;
+            z-index: 20;
+
+         }
+        #loginForm {  /*classe css*/
+            border: 1px solid #555555;
+            background-color: azure;
+            padding: 20px;
+            width: 50%;
+            margin: 50px auto;
+            position: relative; /*sort du flux mais garde son emplacement dans le flux */
+            z-index: 10;
+        }
+
+        .helpForm {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 12px;
+            border-radius: 1px;
+            border-width: thin;
+            border: 1px solid rgb(46, 46, 46);
+            background-color: rgb(255, 255, 255);
+            padding: 2px;
+            width: auto;
+            max-width: 30%;
+            max-height: 20px;
+            margin: 2px auto;
+            position:absolute;
+            z-index: 20;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+         }
+
+        .overlay{   /*style css*/
+            width: 100%;
+            height: 100%;
+            left :0;
+            top : 0;
+            position: absolute;
+            opacity: 70%;
+            background-color: rgba(0,0,0,.6);
+        }
+
+        .overlay2{  /*style css*/
+            width: 100%;
+            height: 100%;
+            left :0;
+            top : 0;
+            position: absolute;
+            opacity: 70%;
+            background-color: rgba(20,0,60,.3);
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1 style="color:rgb(185, 58, 164)" id=indexId>JavaScript quatrième jour...</h1>
+    <p>Exo Login</p>
+    <p>Pleins pleins de trucs en vrac... (bulles d'aide) / petit popup...</p>
+    <BR>
+    <div class='overlay'></div>
+    <button id='showLogin'>Afficher le login</button>
+    <div id='loginForm'>
+        <form>
+            <input type='text' placeholder="login" id='loginInput'>
+            <input type='password' placeholder="password" id="pswInput">
+            <button type="submit" id="btSubmitLogin">valider</button>
+        </form>
+    </div>
+    <div id='starsForm'>
+        <ul id='listStars'>
+
+        </ul>
+
+    </div>
+    <button id='showSomethigElse'>Afficher autre chose</button>
+</body>
+
+<!-- IMPORTS -->
+<script src="js-data/astronomie.js"> </script>
+
+<!-- SCRIPT -->
+<script>
+
+
+
+    // ---CIBLAGE DES ELEMENTS DU DOM---
+    var $buttonShowMenu = document.getElementById('showLogin');
+    var $overlay = document.querySelector('.overlay');
+    var $loginForm = document.getElementById('loginForm');
+    var $listStars = document.getElementById('listStars');
+    var $starsForm = document.getElementById('starsForm');
+    var $allElements = document.body.children;
+
+    console.log($allElements);
+
+    // ---DECLARATIONS---
+    const HELPMAP = {
+        'showLogin': "Afficher le menu de login",
+        'showSomethigElse': "test bgdfgdfgdfgdfgdfgdfgrezrzerzrzerrzerzerzer",
+        'btSubmitLogin': "Valider votre login"
+    }
+
+    const TIMEBEFOREHELPINMILLISECOND = 1000;
+    const MOUSEDEADZONEFORHELPINPX = 20;
+
+
+    //---FONCTIONS---
+
+    function sleep(milliseconds) {
+        var start = new Date().getTime();
+        for (var i = 0; i < 1e7; i++) {
+            if ((new Date().getTime() - start) > milliseconds) {
+                break;
+            }
+        }
+    }
+    function loadStarsList() {
+        dataStars.forEach(tempStar => {
+            let newStar = document.createElement("li");
+            newStar.innerHTML = tempStar.star;
+            newStar.classList.toggle('stars');
+            newStar.addEventListener("click", (event) => {
+                newStar.addEventListener("mouseleave", function stMouseLeave(event) {
+                    event.target.removeEventListener("mouseleave", stMouseLeave);
+                    if (event.explicitOriginalTarget == starDetailsWindows) {
+                        starDetailsWindows.addEventListener("mouseleave",
+                            () => { document.body.removeChild(starDetailsWindows); })
+                    } else {
+                        document.body.removeChild(starDetailsWindows);
+                    }
+                });
+                let starDetailsWindows = document.createElement("div");
+                for (var key in tempStar) {
+                    let starDetailElement = document.createElement('p');
+                    starDetailElement.innerHTML = `${key} : ${tempStar[key]}`;
+                    starDetailElement.addEventListener("dblclick", () => {
+                        inputItem = document.createElement("input");
+                        inputItem.setAttribute("value", starDetailElement.innerHTML);
+
+                        inputItem.addEventListener("change", () => { //modif du champ
+                            let pItem = document.createElement('p');
+                            pItem.innerHTML = inputItem.value;
+                            starDetailsWindows.replaceChild(pItem, inputItem);
+                        });
+                        
+                        inputItem.addEventListener("onblur",() =>{ //remise des valeurs anciennes du champ
+                            let pItem = document.createElement('p');
+                            pItem.innerHTML = starDetailElement.innerHTML;
+                            starDetailsWindows.replaceChild(pItem, inputItem);
+                        });
+
+                        starDetailsWindows.replaceChild(inputItem, starDetailElement);
+
+
+                    })
+                    starDetailsWindows.appendChild(starDetailElement);
+                };
+                starDetailsWindows.classList.toggle('starsForm');
+                starDetailsWindows.style.top = event.clientY - 30 + 'px';
+                starDetailsWindows.style.left = event.clientX + 30 + 'px';
+
+                document.body.appendChild(starDetailsWindows);
+            })
+            $listStars.appendChild(newStar);
+        });
+    };
+
+    var toggleForm = () => {
+        $loginForm.classList.toggle('hidden');
+        $overlay.classList.toggle('hidden');
+    };
+
+    function helperHandlerEnter(textHelp) { //factory
+        return function (event) {
+
+            // création de la bulle d'aide
+            let helpForm = document.createElement("p");
+            helpForm.innerHTML = textHelp;
+            helpForm.classList.toggle('helpForm');
+
+            // application au DOM
+            document.body.appendChild(helpForm);
+
+            // création d'un listener pour le mouvement et la position de la bulle d'aide
+            event.target.addEventListener("mousemove", function evtMove(event) {
+                helpForm.style.left = event.clientX + "px";
+                helpForm.style.top = event.clientY + 20 + "px";
+            });
+
+            // création d'un listener pour la sortie de la cible
+            event.target.addEventListener("mouseleave", function evtLeave() {
+                event.target.removeEventListener("mouseleave", evtLeave);
+                document.body.removeChild(helpForm);
+            });
+        }
+    };
+
+
+    //---GESTIONNAIRES D'EVENEMENTS---
+    $buttonShowMenu.addEventListener("click", (event) => {
+        event.stopPropagation();
+        toggleForm();
+    });
+    $loginForm.addEventListener("click", (event) => {
+        event.stopPropagation();
+    });
+    document.addEventListener("click", (event) => {
+        if (!$overlay.classList.contains('hidden')) {
+            toggleForm();
+        }
+    });
+
+    //validation du formulaire
+    $form = document.querySelector("#loginForm form");
+    $loginInput = document.getElementById('loginInput');
+    $pswInput = document.getElementById('pswInput');
+    $form.addEventListener("submit", (event) => {
+        event.preventDefault(); // empèche le comportement par defaut...
+        var regExPsw = new RegExp("[a-zA-Z]{3,}");
+        var regExLogin = new RegExp("[a-zA-Z]{3,}");
+        if (regExLogin.test($loginInput.value.trim()) && (regExPsw.test($pswInput.value.trim()))) {
+            $form.submit();
+        } else {
+            //creation d'un popup 
+            let popUpLoginWindow = document.createElement("div");
+            popUpLoginWindow.innerHTML = "Erreur de saisie";
+            popUpLoginWindow.classList.toggle('popup');
+            popUpLoginWindow.style.top = "5px";
+            popUpLoginWindow.style.left = "5px";
+            $form.appendChild(popUpLoginWindow);
+            var milliseconds = 800;
+            setTimeout(function () { $form.removeChild(popUpLoginWindow); }, milliseconds);
+
+
+
+
+        }
+    });
+
+    // mise en place des infos bulles d'aide
+    for (element in $allElements) {
+        if ($allElements[element].id in HELPMAP) {
+            console.log('OK');
+            $allElements[element].addEventListener("mouseenter",
+                helperHandlerEnter(HELPMAP[$allElements[element].id]));
+        }
+
+
+    }
+
+    //---WORK---
+    toggleForm();
+    loadStarsList();
+
+
+
+
+
+
+
+</script>
+
+</html>

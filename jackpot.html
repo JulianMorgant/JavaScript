@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Exo JS</title>
+</head>
+
+<body>
+
+    <h1 style="color:rgb(185, 58, 164)" id=indexId>Java deuxieme jour...</h1>
+    <p>Exo DOM</p>
+    <button id="bt1">Clik Me Pleaaaaaaaase</button>
+    <BR>
+    <button id="bt2">Bt2</button>
+    <BR>
+    <span id=SpanResult0 style="color:rgb(47, 157, 165)"></span>
+    <span id=SpanResult1 style="color:rgb(47, 157, 165)"></span>
+    <span id=SpanResult2 style="color:rgb(47, 157, 165)"></span>
+    <span id=SpanResult3 style="color:rgb(47, 157, 165)"></span>
+    <span id=SpanResult4 style="color:rgb(47, 157, 165)"></span>
+
+</body>
+
+
+<!-- IMPORTS -->
+<!-- <script src="js-data/livres.js"> </script>  -->
+
+<!-- SCRIPT -->
+<script>
+
+    // FONCTIONS
+    function existInTable(tableToRead, elementToFind) {
+        returnBoolean = false;
+        elementToFind = elementToFind.toUpperCase();
+        for (let element of tableToRead) {
+            if (element.toUpperCase() == elementToFind) { returnBoolean = true; break }
+        }
+        return returnBoolean;
+    }
+
+    function sleep(milliseconds) {
+        var start = new Date().getTime();
+        for (var i = 0; i < 1e7; i++) {
+            3
+            if ((new Date().getTime() - start) > milliseconds) {
+                break;
+            }
+        }
+    }
+
+    function randomInt(min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    function isANumber(arg) {
+        return !isNaN(arg - 0)
+    }
+
+    function setIcon(obj, nb) {
+        obj.innerHTML = `<img src='${ICONLIST[nb]}'>`;
+    }
+
+    // VARIABLES
+    const ICONLIST = [
+        'ico/favicon.ico', 'ico/favicon1.ico', 'ico/favicon2.ico',
+        'ico/favicon3.ico', 'ico/favicon4.ico', 'ico/favicon5.ico',
+        'ico/favicon6.ico', 'ico/favicon7.ico', 'ico/favicon8.ico'
+    ];
+
+
+
+
+
+    var bt1 = document.getElementById("bt1");
+    var bt2 = document.getElementById("bt2");
+
+    var txt1 = document.getElementById("SpanResult0");
+    var txt2 = document.getElementById("SpanResult1");
+    var txt3 = document.getElementById("SpanResult2");
+    var txt4 = document.getElementById("SpanResult3");
+    var txt5 = document.getElementById("SpanResult4");
+
+
+    var myString = "";
+    var mySpace = "";
+
+    bt1.onclick = () => txt1.innerHTML = `Haaaaaa <BR>`;
+    bt2.onclick = clik2;
+    bt2.onmouseover = MoveBtn;
+
+    function clik2() {
+        myString += `Haaaaaa <BR>`;
+        setIcon(txt1, randomInt(0,8));
+        setIcon(txt2, randomInt(0,8));
+        setIcon(txt3, randomInt(0,8));
+        setIcon(txt4, randomInt(0,8));
+        setIcon(txt5, randomInt(0,8));
+            
+
+        /*        txt1.innerHTML = "<img src='ico/favicon.ico'>";
+                txt2.innerHTML = "<img src='ico/favicon1.ico'>";
+                txt3.innerHTML = "<img src='ico/favicon2.ico'>";
+                txt4.innerHTML = "<img src='ico/favicon3.ico'>";
+                txt5.innerHTML = "<img src='ico/favicon4.ico'>";
+          */
+        bt2.textContent = 'red';
+
+
+    }
+
+    function MoveBtn() {
+        mySpace += " <BR>           ";
+        bt2.previousElementSibling.innerHTML = mySpace;
+        bt2.style.transform = "rotate(90deg)";
+        // bt2.style.backgroundColor = 'lime'; 
+        bt2.style.transform = "translateX(40px);rotate(90deg)";
+
+    }
+    var body = document.body;
+    var h1 = body.firstElementChild;
+    var p = h1.nextElementSibling;
+
+    body.oncontextmenu = () => { return false; } // empeche le click droit
+
+    console.log(p);
+
+
+</script>
+
+</html>

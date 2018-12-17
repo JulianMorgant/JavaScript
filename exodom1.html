@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Exo JS</title>
+</head>
+
+<body>
+
+    <h1 style="color:rgb(185, 58, 164)" id=indexId>JavaScript troisième jour...</h1>
+    <p>Exo DOM 1</p>
+    <p>Selectionner la backgroundcolor dans une liste déroulante</p>
+    <BR>
+    <SELECT id="selector"></SELECT>
+
+</body>
+
+
+<!-- IMPORTS -->
+<!-- <script src="js-data/livres.js"> </script>  -->
+
+<!-- SCRIPT -->
+<script>
+
+    //---FONCTIONS---
+
+
+    //---DECLARATIONS---
+
+    var body = document.body;
+    var selector = document.getElementById("selector");
+
+    const COLORLIST = {
+        "Choisissez une couleur...":'',
+        "Rouge": 'red', "Vert": 'rgb(0,255,0)',
+        "Bleu": 'rgb(0,0,255)', "Blanc": 'rgb(255,255,255)',
+        "Pascal": 'rgb(127,255,30)', "Violet": 'rgb(30,0,120)'
+    };
+    console.log(COLORLIST);
+
+    //---WORK---
+
+    // Création de la chaine de caractères pour remplir la liste déroulante
+    var colorsStringBuilder = "";
+    for (let color in COLORLIST) {
+        colorsStringBuilder += `<OPTION value=${COLORLIST[color]}>${color}</OPTION>`
+    }
+
+    // remplissage de la liste
+    selector.innerHTML = colorsStringBuilder;
+
+    // creation d'un listener (écouteur d'evènement...)
+    selector.addEventListener("change",() => {
+        body.setAttribute("style",`background-color:${selector.value}`);
+        // la ligne suivante pour retirer la premiere ligne : 'choisissez une couleur...'
+        if (selector.firstElementChild.value =='') {selector.removeChild(selector.firstElementChild)};
+    });
+
+</script>
+
+</html>

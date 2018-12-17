@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Exo JS</title>
+</head>
+
+<body>
+
+    <h1 style="color:rgb(185, 58, 164)" id=indexId>Java deuxieme jour...</h1>
+    <p>Exo Tableaux 4 | TaleauxAssociatifs, Maps ...</p>
+    <p>Retrouver des livres dans livres.js</p>
+    <span id=SpanResult style="color:rgb(47, 157, 165)"></span>
+</body>
+
+
+<!-- IMPORTS -->
+<script src="js-data/livres.js"> </script>
+
+<!-- SCRIPT -->
+<script>
+    
+    // FONCTIONS
+    function existInTable(tableToRead,elementToFind) {
+        returnBoolean = false;
+        elementToFind = elementToFind.toUpperCase();
+        for (let element of tableToRead) {
+            if (element.toUpperCase() == elementToFind) {returnBoolean = true;break}
+        }
+        return returnBoolean;
+    }
+    
+    // VARIABLES
+    var listOfBooksWhoHaveMoreThanOneAuthor = [];
+    var listOfBooksWhoCostLessThan20 = [];
+    var listOfBooksWhoHaveTagBaseDeDonnees = [];
+    var sumOfPricesOfInformatiqueBooks = 0;
+
+    // WORK
+    for (let book of books) {
+        if (book.price < 20) { listOfBooksWhoCostLessThan20.push(book) };
+        if (existInTable(book.tags,"Base de données")) { listOfBooksWhoHaveTagBaseDeDonnees.push(book) };
+        if (book.authors.length > 1) { listOfBooksWhoHaveMoreThanOneAuthor.push(book) };
+        if (existInTable(book.tags,"informatique")) {sumOfPricesOfInformatiqueBooks += book.price}
+    }
+
+    // OUT
+    console.log(listOfBooksWhoCostLessThan20);
+    console.log(listOfBooksWhoHaveTagBaseDeDonnees);
+    console.log(listOfBooksWhoHaveMoreThanOneAuthor);
+    console.log(`Somme des prix des livres parlant d'informatique : ${sumOfPricesOfInformatiqueBooks}`);
+
+    document.getElementById('SpanResult').innerHTML = `Résultats : <BR>
+  Tableau : ${books} <BR>
+  *********************<BR>`
+    console.table(books);
+
+
+
+</script>
+
+</html>

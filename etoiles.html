@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Exo 3</title>
+</head>
+
+<body>
+
+    <h1 style="color:rgb(185, 58, 164)" id=indexId>Java premier jour...</h1>
+    <p>youpi, le truc des etoiles^^ je suis trop content de faire ça...</p>
+    <span id=SpanResult style="color:rgb(47, 157, 165)"></span>
+</body>
+
+
+<script>
+    var myString = "";
+    for (let i = 1; i < 10; i++) {
+        for (let j = 1; j <= i; j++) {
+            myString += "*";
+        }
+        myString += "<br>";
+    }
+    console.log(myString);
+    document.getElementById('SpanResult').innerHTML = `Résultats : <BR> ${myString}`;
+</script>
+
+</html>

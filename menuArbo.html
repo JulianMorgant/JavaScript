@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Exo JS</title>
+
+    <style>
+        /* pour cacher */
+        .hidden {
+            display: none;
+        }
+
+        /* pour changer de pointeur sur les balises 'a' ... plus class */
+        #menu a {
+            cursor:pointer;
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <h1 style="color:rgb(185, 58, 164)" id=indexId>JavaScript troisième jour...</h1>
+    <p>Exo Menu arborescent</p>
+    <p>Menu arborescent | Accordéon générique </p>
+    <BR>
+    <h2>Du mangé</h2>
+    <ul id='menu'>
+        <li>
+            <a>Fruits</a>
+            <ul>
+                <li>Pommes</li>
+                <li>Poires</li>
+                <li>
+                    <a>Fruits Sec</a>
+                    <ul>
+                        <li>Noix</li>
+                        <li>Noisettes</li>
+                        <li>Cajoux</li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <a>Légumes</a>
+            <ul>
+                <li>Poireaux</li>
+                <li>Patattes</li>
+            </ul>
+        </li>
+        <li>
+                <a>Viande</a>
+                <ul>
+                    <li>Poulet</li>
+                    <li>Canard</li>
+                </ul>
+            </li>
+     </ul>
+</body>
+
+<!-- IMPORTS -->
+<!-- <script src="js-data/livres.js"> </script>  -->
+
+<!-- SCRIPT -->
+<script>
+
+    //---FONCTIONS---
+    // gestionnaire d'évènements
+    var menuHandler = (event) => {
+        console.log(event);
+        event.target.parentElement.querySelector('ul').classList.toggle("hidden");
+    };
+
+    //---DECLARATIONS---
+    var allMenu = document.querySelectorAll('#menu a'); //tous les a enfants de id menu
+
+    //---WORK---
+    // creation d'un listener pour tous les items de menu
+    allMenu.forEach(element => {element.addEventListener("click", menuHandler);
+    });
+
+ 
+</script>
+
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Javascript</h1>
+    <button id='btAddPhone'>Ajouter un telephone</button>
+
+    <div id='phoneList'>
+
+    </div>
+    
+</body>
+
+<script>
+    var $phoneList = document.getElementById('phoneList');
+    var $btAddPhone = document.getElementById('btAddPhone');
+
+    function addPhone(){
+        // création du conteneur
+        let tempDiv = document.createElement("div");
+
+        // création du champ texte
+        let phoneInput = document.createElement("input");
+        phoneInput.setAttribute("type","tel");
+        phoneInput.setAttribute("pattern","^(/d){2}([-. ]?(/d){2}){4}$");
+        phoneInput.setAttribute("name","phones[]");
+
+        // insertion du champ texte dans le conteneur
+        tempDiv.appendChild(phoneInput);
+
+        //insertion dans le DOM
+        $phoneList.appendChild(tempDiv);
+    }
+
+    $btAddPhone.onclick = addPhone;
+
+</script>
+
+</html>

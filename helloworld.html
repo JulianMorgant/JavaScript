@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title >Exo 3</title>
+</head>
+
+<body>
+
+    <h1 style="color:rgb(185, 58, 164)" id=indexId></h1>
+    <p>Lorem ipsum dolor sit amet.</p>
+    <span style="color:rgb(47, 157, 165)">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Unde consectetur nam ducimus dolor recusandae,
+        sapiente qui adipisci est numquam. Nulla sapiente voluptates similique obcaecati possimus harum quos tenetur
+        provident, distinctio fugiat veniam natus, unde excepturi fuga consequuntur labore corrupti quaerat.</span>
+</body>
+
+<script>
+    var elem = document.getElementById('indexId');
+   
+   
+    function entierAleatoire(min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+    function sleep(milliseconds) {
+        var start = new Date().getTime();
+        for (var i = 0; i < 1e7; i++) {3
+            if ((new Date().getTime() - start) > milliseconds) {
+                break;
+            }
+        }
+    }
+    //Utilisation
+
+    var tab = [56, 78, 34, 32, 22, 11, 23];
+    var tempString = "<span style='color:blue'><table style='width:10%' border = '1px solid black border'>";
+    var tempString2 = "<span style='color:red'><table style='width:10%' border = '1px solid black border'>";
+    for (var i = 0; i < tab.length; i++) {
+
+        if (tab[i] > 34) {
+            tempString = tempString + "<tr><th>" + tab[i] + " </th></tr>";
+        }else{
+            tempString2 = tempString2 + "<tr><th>" + tab[i] + " </th></tr>";
+        }
+    }
+    tempString = tempString + "</table></span>";
+    tempString2 = tempString2 + "</table></span>";
+    
+
+    /*
+
+    var entier = entierAleatoire(0, 100000);
+    var index = 0;
+    while (entier != entierAleatoire(0, 100000)) {
+        elem.innerHTML = index;
+        index++;
+    }
+    console.log('occurences : ' + index);
+    */
+
+    elem.innerHTML = 'resultats : <BR>' + typeof te;
+</script>
+
+</html>
