@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Panier</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
+    <script src="js-data/livres.js"></script>
+    <script src="lib/jquery-3.3.1.min.js"></script>
+    <script src="lib/jquery-ui.min.js"></script>
+    <style>
+        /* pour cacher */
+        .hidden {
+            display: none;
+        }
+
+        /*
+         pour changer de pointeur sur les balises 'a' ... plus class 
+        #menu a {
+            cursor:pointer;
+        }
+        */
+        .stars {
+            cursor: pointer;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .starsForm {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 12px;
+            border-radius: 3px;
+            border-width: thin;
+            border: 1px solid rgb(46, 46, 46);
+            background-color: rgb(255, 255, 255);
+            padding: 2px;
+            width: auto;
+            max-width: 40%;
+            max-height: 70%;
+            margin: 2px auto;
+            position: absolute;
+            z-index: 20;
+
+        }
+
+
+        .popup {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 12px;
+            border-radius: 3px;
+            border-width: thin;
+            border: 1px solid rgb(46, 46, 46);
+            background-color: rgb(255, 255, 255);
+            padding: 2px;
+            width: auto;
+            max-width: 40%;
+            max-height: 70%;
+            margin: 2px auto;
+            position: absolute;
+            z-index: 20;
+
+        }
+
+        #loginForm {
+            /*classe css*/
+            border: 1px solid #555555;
+            background-color: azure;
+            padding: 20px;
+            width: 50%;
+            margin: 50px auto;
+            position: relative;
+            /*sort du flux mais garde son emplacement dans le flux */
+            z-index: 10;
+        }
+
+        .helpForm {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 12px;
+            border-radius: 1px;
+            border-width: thin;
+            border: 1px solid rgb(46, 46, 46);
+            background-color: rgb(255, 255, 255);
+            padding: 2px;
+            width: auto;
+            max-width: 30%;
+            max-height: 20px;
+            margin: 2px auto;
+            position: absolute;
+            z-index: 20;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .overlay {
+            /*style css*/
+            width: 100%;
+            height: 100%;
+            left: 0;
+            top: 0;
+            position: absolute;
+            opacity: 70%;
+            background-color: rgba(0, 0, 0, .6);
+        }
+
+        .overlay2 {
+            /*style css*/
+            width: 100%;
+            height: 100%;
+            left: 0;
+            top: 0;
+            position: absolute;
+            opacity: 70%;
+            background-color: rgba(20, 0, 60, .3);
+        }
+
+        .picture {
+            width: 100px;
+            height: 100px;
+
+        }
+
+        .button {
+            width: 100px;
+            height: 20px;
+        }
+
+        .active {
+            box-shadow: 10px 5px 5px red;
+
+        }
+    </style>
+</head>
+
+<body>
+    <h1>
+        Pannier des livres
+    </h1>
+    <div>
+        <select id="bookSelect"></select>
+        <button id="btAddBook" class="button">Ajouter</button>
+
+    </div>
+
+    <table id='cart'>
+        <thead>
+            <th>Livre</th>
+            <th>PU</th>
+            <th>Qt</th>
+            <th>Total</th>
+        </thead>
+        <tbody>
+
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan='3'>Total</td>
+                <td id='grandTotal'></td>
+            </tr>
+        </tfoot>
+    </table>
+
+</body>
+<script>
+
+    function loadBooks() {
+        books.forEach(element => {
+            let tempBook = $('<option></option>')
+                .html(element.title);
+            $('#bookSelect').append(tempBook);
+        });
+
+    }
+
+    function loadListeners() {
+        $('#btAddBook').click(addBook);
+    }
+
+    function addBook() {
+
+        let myKey = $('#bookSelect').find(":selected").index();
+        let $cart = $('#cart tbody');
+        let newRaw = $('<tr></tr>').html(
+            `<td>${books[myKey].title}</td>
+            <td>${books[myKey].price}</td>
+            <td><input class='inputNb'></input></td>
+            <td>1000</td>            
+            `
+            )
+        $cart.append(newRaw);
+        console.log(myKey);
+
+
+
+    }
+
+
+
+    $(document).ready(function () {
+        loadBooks();
+        loadListeners();
+
+    });
+
+</script>
+
+</html>

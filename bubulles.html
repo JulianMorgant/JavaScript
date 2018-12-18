@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Bubbles</title>
+
+    <style>
+        .bubbles {
+            border-radius: 50%;
+            background-color: rgba(100, 150, 80, .5);
+
+            position: absolute;
+            top: 200px;
+            left: 200px;
+
+            align-items: center;
+            
+
+
+           
+
+        }
+    </style>
+    <script src="lib/jquery-3.3.1.min.js"></script>
+    <script src="imageList.js"></script>
+</head>
+
+<body>
+
+    <h1 style="color:rgb(185, 58, 164)" id=indexId>JavaScript septième jour...</h1>
+    <p>Exo Images</p>
+    <p id='aff'>jQuery</p>
+    <BR>
+
+
+
+</body>
+
+
+<!-- SCRIPT -->
+<script>
+
+    var bubbleNumber = 0;
+
+    function randomInt(min, max) {
+        if (arguments.length == 0) { min = 0; max = 1; };
+        if (arguments.length == 1) { max = min; min = 0 };
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    function createABubble() {
+        var $body = $("body");
+        let taille = randomInt(10, 300) + "px";
+        let topI = randomInt(window.innerHeight);
+        let leftI = randomInt(window.innerWidth);
+        var $bubble = $("<div></div>")
+            .addClass('bubbles')
+            .width(taille)
+            .height(taille)
+            .css({
+                'top': topI + "px",
+                'left': leftI + "px",
+                'background-color': `rgba(0,${randomInt(255)},
+                ${randomInt(255)},${randomInt(5, 10) / 10}`,
+                'background-position-x' : `${topI-taille/2}px`,
+                'background-position-y' : `${leftI-taille/2}px`
+
+            });
+
+        $body.append($bubble);
+        bubbleNumber++;
+        $("#aff").html(bubbleNumber + " bubbles affichées");
+        $bubble.hide(1);
+        $bubble.show(randomInt(1000, 10000));
+        setTimeout(() => { $bubble.hide(randomInt(1000, 3000), () => { $bubble.remove(); bubbleNumber-- }), 1 });
+    }
+
+    $(document).ready(function () {
+        setInterval(createABubble, 50);
+    });
+</script>
+
+</html>
