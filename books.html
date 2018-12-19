@@ -16,6 +16,10 @@
             display: none;
         }
 
+        #bookTemplate {
+            display: none;
+        }
+
         /*
          pour changer de pointeur sur les balises 'a' ... plus class 
         #menu a {
@@ -27,7 +31,7 @@
             font-family: Arial, Helvetica, sans-serif;
         }
 
-        .starsForm {
+        .detailsForm {
             font-family: Arial, Helvetica, sans-serif;
             font-size: 12px;
             border-radius: 3px;
@@ -92,6 +96,46 @@
             overflow: hidden;
             text-overflow: ellipsis;
         }
+        .tab{
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 12px;
+            border-radius: 1px;
+            border-width: thin;
+            border: 1px solid rgb(46, 46, 46);
+            background-color: rgb(255, 255, 255);
+            padding: 2px;
+            width: auto;
+            max-width: 30%;
+            max-height: 20px;
+            margin-left:auto;
+            margin-right:auto;
+            position: absolute;
+            z-index: 20;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            align-items: center;
+
+        }
+        .tabinput{
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 12px;
+            border-radius: 1px;
+            border-width: thin;
+            border: 1px solid rgb(46, 46, 46);
+            background-color: rgb(255, 255, 255);
+            padding: 2px;
+            width: auto;
+            max-width:35%;
+            max-height: 20px;
+            margin:  auto;
+            position: relative;
+            z-index: 20;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+
+        }
 
         .overlay {
             /*style css*/
@@ -142,8 +186,9 @@
         <button id="btAddBook" class="button">Ajouter</button>
 
     </div>
+    <br>
 
-    <table id='cart'>
+    <table id='cart' class='tab'>
         <thead>
             <th>Livre</th>
             <th>PU</th>
@@ -151,7 +196,12 @@
             <th>Total</th>
         </thead>
         <tbody>
-
+            <tr id="bookTemplate">
+                <td></td>
+                <td></td>
+                <td style="text-align: center"><input type="number" class='tabinput'></td>
+                <td></td>
+            </tr>
         </tbody>
         <tfoot>
             <tr>
@@ -164,43 +214,140 @@
 </body>
 <script>
 
+    var myCart = [];
+
+
+    //objet equivalent a une ligne sur un bon de commande
+    function cartRow(title, unitPrice, quantity) {
+
+        var quantity = 1;
+        this.title = title;
+        this.unitPrice = unitPrice;
+        this.quantity = quantity;
+
+        this.getTotal = function () {
+            return this.unitPrice * this.quantity
+        }
+
+        this.addUnits = function (qte) {
+            arguments.length == 0 ? this.quantity++ : this.quantity = parseInt(qte);
+            if (this.quantity < 1) { deleteRaw(this.title) };
+            refreshVue(myCart);
+        }
+    }
+
+    //charge les livres du fichier js 
     function loadBooks() {
         books.forEach(element => {
             let tempBook = $('<option></option>')
                 .html(element.title);
             $('#bookSelect').append(tempBook);
         });
-
     }
 
+    function loadOneBook(title) {
+        books.forEach(element => {
+            if (element.title == title) { return element };
+        });
+    }
+
+    function deleteRaw(title) {
+        for (let index = 0; index < myCart.length; index++) {
+            if (myCart[index].title == title) { myCart.splice(index, 1); break };
+        }
+    }
+
+    //loadListerners
     function loadListeners() {
         $('#btAddBook').click(addBook);
+        $('#cart tbody').delegate("input", "change", function () {
+            let title = $(this).parent().parent().children().eq(0).text();
+            let value = $(this).val();
+            myCart.forEach(element => {
+                console.log(element);
+                if (element.title == title) { element.addUnits(value) };
+            });
+        });
     }
 
+    //ajoute un nouveau livre ou augmente la commande de 1 si il existe
     function addBook() {
 
         let myKey = $('#bookSelect').find(":selected").index();
-        let $cart = $('#cart tbody');
-        let newRaw = $('<tr></tr>').html(
-            `<td>${books[myKey].title}</td>
-            <td>${books[myKey].price}</td>
-            <td><input class='inputNb'></input></td>
-            <td>1000</td>            
-            `
-            )
-        $cart.append(newRaw);
-        console.log(myKey);
-
-
-
+        let tempValue = bookAlreadyInCart(myCart, books[myKey].title)
+        if (tempValue == -1) {
+            let newRaw = new cartRow(books[myKey].title, books[myKey].price);
+            myCart.push(newRaw);
+        } else {
+            myCart[tempValue].addUnits();
+        }
+        refreshVue(myCart);
     }
 
+    //teste la présence d'un livre dans le pannier, 
+    // -1 si pas de livre | index de l'occurence trouvée
+    function bookAlreadyInCart(cart, title) {
+        console.log(title + " ");
+        for (let index = 0; index < cart.length; index++) {
+            if (cart[index].title == title) {
+                return index;
+                break;
+            }
+        }
+        return -1;
+    }
 
+    //efface la vue
+    function clearVue() {
+        var $cartTBodyTr = $('#cart tbody tr');
+        for (let i = $cartTBodyTr.length; i > 0; i--) {
+            $cartTBodyTr.eq(i).remove();
+        }
+    }
 
+    //retourne le total du pannier
+    function totalCart(cart) {
+        let tempTotal = 0;
+        cart.forEach(element => {
+            tempTotal = tempTotal + element.getTotal();
+        });
+        return tempTotal;
+    }
+
+    //recréé la vue
+    function refreshVue(cart) {
+        clearVue();
+        cart.forEach(element => {
+            let $newRow = $('#bookTemplate').clone().removeAttr("id");
+            $newRow.find("td").eq(0).text(element.title).mouseenter(viewinfo);
+            $newRow.find("td").eq(1).text(element.unitPrice);
+            $newRow.find("td").eq(2).children().val(element.quantity);
+            $newRow.find("td").eq(3).text(element.getTotal());
+            $('#cart tbody').append($newRow);
+        });
+        $('#grandTotal').html(totalCart(cart));
+    }
+
+    function viewinfo(event) {
+        let title = $(this).text();
+        let tempBook = loadOneBook(title);
+        let detailsWindows = document.createElement("div");
+        for (var key in tempBook) {
+            let detailElement = document.createElement('p');
+            detailElement.innerHTML = `${key} : ${tempBook[key]}`;
+            detailsWindows.appendChild(detailElement);
+        }
+        detailsWindows.classList.toggle('detailsForm');
+        detailsWindows.style.top = event.clientY - 30 + 'px';
+        detailsWindows.style.left = event.clientX + 30 + 'px';
+        detailsWindows.addEventListener
+        document.body.appendChild(detailsWindows);
+    }
+
+    //GO
     $(document).ready(function () {
         loadBooks();
         loadListeners();
-
     });
 
 </script>
